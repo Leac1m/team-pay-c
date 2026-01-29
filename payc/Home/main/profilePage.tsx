@@ -30,6 +30,7 @@ import {
 } from 'lucide-react-native';
 import {useDropUp} from "@/payc/contexts/DropUpContexts";
 import {router} from "expo-router";
+import {footerNavs} from "@/payc/constants/footer";
 
 
 // ──────────────────────────────────────────────
@@ -43,12 +44,6 @@ type MainNavItem = {
 };
 
 
-
-const footerNavs = [
-    { label: 'Tokens', icon: <Coins size={20} /> },
-    { label: 'Wallet', icon: <Wallet size={20} /> },
-    { label: 'Swap', icon: <ArrowRightLeft size={20} /> , action: () => router.replace('/swap')},
-];
 
 const recentTransactions: {
     title: string;
@@ -117,7 +112,7 @@ interface ProfilePageProps {
 }
 
 export default function ProfilePage({ openDropUp }: ProfilePageProps) {
-    const [currentFooterNav, setCurrentFooterNav] = useState(0);
+    const [currentFooterNav, setCurrentFooterNav] = useState(1);
     // const { openDropUp } = useDropUp();
 
 
@@ -309,12 +304,7 @@ export default function ProfilePage({ openDropUp }: ProfilePageProps) {
                                 index === currentFooterNav && styles.footerItemActive,
                             ]}
                             onPress={
-                                // () => {
-                                //     setCurrentFooterNav(index)
-                                // }
-
                                 nav.action
-
                             }
                         >
                             <View style={styles.footerIconContainer}>

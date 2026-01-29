@@ -15,14 +15,10 @@ import {
 import { nairaImage, suiImage, usdcImage } from '@/payc/constants/images';
 import {ArrowDown, Coins, Eye, ArrowRightLeft, Wallet, ArrowLeft} from 'lucide-react-native';
 import {router} from "expo-router";
+import {footerNavs} from "@/payc/constants/footer";
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-const footerNavs = [
-    { label: 'Tokens', icon: <Coins size={20} /> },
-    { label: 'Wallet', icon: <Wallet size={20} /> },
-    { label: 'Swap', icon: <ArrowRightLeft size={20} /> },
-];
 
 const mockBalance = 0;
 
@@ -62,7 +58,7 @@ const cryptoPort = [
 ];
 
 const PortfolioPage = () => {
-    const [currentFooterNav, setCurrentFooterNav] = useState(1); // Wallet selected by default
+    const [currentFooterNav, setCurrentFooterNav] = useState(0); // Tokens selected by default
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -192,7 +188,9 @@ const PortfolioPage = () => {
                                     styles.footerItem,
                                     index === currentFooterNav && styles.footerItemActive,
                                 ]}
-                                onPress={() => setCurrentFooterNav(index)}
+                                onPress={
+                                    nav.action
+                                }
                             >
                                 {React.cloneElement(nav.icon as any, {
                                     color: index === currentFooterNav ? '#ffffff' : '#94A3B8',
@@ -381,7 +379,7 @@ const styles = StyleSheet.create({
         borderTopColor: '#475569',
         backgroundColor: '#1B2949',
         paddingTop: 12,
-        paddingBottom: 8,
+        paddingBottom: 40,
     },
     footerInner: {
         flexDirection: 'row',
