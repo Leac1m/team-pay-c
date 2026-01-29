@@ -29,6 +29,7 @@ import {
     Wallet, ArrowDown,
 } from 'lucide-react-native';
 import {useDropUp} from "@/payc/contexts/DropUpContexts";
+import {router} from "expo-router";
 
 
 // ──────────────────────────────────────────────
@@ -46,7 +47,7 @@ type MainNavItem = {
 const footerNavs = [
     { label: 'Tokens', icon: <Coins size={20} /> },
     { label: 'Wallet', icon: <Wallet size={20} /> },
-    { label: 'Swap', icon: <ArrowRightLeft size={20} /> },
+    { label: 'Swap', icon: <ArrowRightLeft size={20} /> , action: () => router.replace('/swap')},
 ];
 
 const recentTransactions: {
@@ -146,32 +147,34 @@ export default function ProfilePage({ openDropUp }: ProfilePageProps) {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.mainContentWrapper}>
-                <ScrollView contentContainerStyle={styles.scrollContent}>
-                    {/* Top bar - profile + quick menu */}
-                    <View style={styles.headerRelative}>
-                        <View style={styles.profileRow}>
-                            <View style={styles.avatarBorder}>
-                                <View style={styles.avatarInner}>
-                                    <Image source={profileImg} style={styles.avatarImg} />
-                                </View>
-                            </View>
-                            <Text style={styles.greeting}>HI, Jimmy</Text>
-                        </View>
 
-                        <View style={styles.quickMenuContainer}>
-                            <View style={styles.quickIconsWrapper}>
-                                {quickMenuImages.map((item, index) => (
-                                    <View key={index} style={styles.quickIconItem}>
-                                        <Image
-                                            source={item.img}
-                                            style={styles.quickIcon}
-                                            resizeMode="contain"
-                                        />
-                                    </View>
-                                ))}
+                {/* Top bar - profile + quick menu */}
+                <View style={styles.headerRelative}>
+                    <View style={styles.profileRow}>
+                        <View style={styles.avatarBorder}>
+                            <View style={styles.avatarInner}>
+                                <Image source={profileImg} style={styles.avatarImg} />
                             </View>
+                        </View>
+                        <Text style={styles.greeting}>HI, Jimmy</Text>
+                    </View>
+
+                    <View style={styles.quickMenuContainer}>
+                        <View style={styles.quickIconsWrapper}>
+                            {quickMenuImages.map((item, index) => (
+                                <View key={index} style={styles.quickIconItem}>
+                                    <Image
+                                        source={item.img}
+                                        style={styles.quickIcon}
+                                        resizeMode="contain"
+                                    />
+                                </View>
+                            ))}
                         </View>
                     </View>
+                </View>
+                <ScrollView contentContainerStyle={styles.scrollContent}>
+
 
                     {/* Balance */}
                     <View style={styles.balanceSection}>
@@ -305,7 +308,14 @@ export default function ProfilePage({ openDropUp }: ProfilePageProps) {
                                 styles.footerItem,
                                 index === currentFooterNav && styles.footerItemActive,
                             ]}
-                            onPress={() => setCurrentFooterNav(index)}
+                            onPress={
+                                // () => {
+                                //     setCurrentFooterNav(index)
+                                // }
+
+                                nav.action
+
+                            }
                         >
                             <View style={styles.footerIconContainer}>
                                 {React.cloneElement(nav.icon as any, {
@@ -461,7 +471,7 @@ const styles = StyleSheet.create({
         borderTopColor: '#475569',
         backgroundColor: '#1B2949',
         paddingTop: 12,
-        paddingBottom: 8,
+        paddingBottom: 40,
     },
     footerInner: {
         flexDirection: 'row',
