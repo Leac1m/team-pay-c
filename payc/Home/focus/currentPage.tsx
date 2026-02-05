@@ -34,27 +34,19 @@ import AirdropIntroPage from '@/payc/Home/main/sendMoney/AirdropIntroPage';
 import SendPage from "@/payc/Home/main/sendMoney/sendPage";
 import {router} from "expo-router";
 import TransactionSuccessPage from "@/payc/Home/main/sendMoney/TransactionSuccessPage";
+import NearbyUserSearchScreen_Airdrop from "@/payc/Home/main/sendMoney/NearbyUserSearchScreen_Airdrop";
+import UserFound_Airdrop from "@/payc/Home/main/sendMoney/UserFound_Airdrop";
+import {DropUpContentType, DropUpDynamicValue, DropUpVariant} from "@/payc/constants/type";
+import SuccessPage_Airdrop from "@/payc/Home/main/sendMoney/SuccessPage_Airdrop";
+import EnterAmountDropUpContent_Card from "@/payc/Home/main/sendMoney/EnterAmountDropUpContent_Card";
+import ReceiveCrypto from "@/app/(payc)/(addPages)/receive-crypto";
+import ReceiveCryptoPage from "@/payc/Home/main/addMoney/RecieveCryptoPage";
 
 
 // import MainPage from '@/payc/Home/mainPage';
 // import other screens...
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
-
-type DropUpVariant = 'handle' | 'back-arrow' | 'plain'; // ← added 'plain' for swap confirmation
-type DropUpDynamicValue = string; // ← added 'plain' for swap confirmation
-type DropUpContentType =
-    | 'add-money'
-    | 'send-money'
-    | 'loading-send-money'
-    | 'bank-transfer'
-    | 'bank-transfer-success'
-    | 'phone-card-illustration'
-    | 'select-currency'
-    | 'enter-amount'
-    | 'confirm-pin'
-    | 'swap-confirmation'
-    | null;
 
 
 
@@ -69,15 +61,24 @@ const CurrentPage = ({ page = 'profile' }: CurrentPageProps) => {
     const [showDropUp, setShowDropUp] = useState(false);
     const [dropUpContent, setDropUpContent] = useState<DropUpContentType>(null);
     const [dropUpVariant, setDropUpVariant] = useState<DropUpVariant>('handle');
-    const [dropUpDynamicValue, setDropUpDynamicValue] = useState<DropUpDynamicValue>('');
+    const [dropUpDynamicValue, setDropUpDynamicValue] = useState<DropUpDynamicValue>({ currency: 'NGN' , deposit: 0, fromUser : 'none'});
+    const [nextFunction, setNextFunction] = useState<()=> void>();
+    const [sendMoneyAmount_CurrencyRoute, setSendMoneyAmount_CurrencyRoute] = useState<string>('0000-null');
+
+    const [swapDetails, setSwapDetails] = useState({
+        transactionFee: { value: 0, currency: 'NGN' },
+        conversion: { from: 'SUI', to: 'USDC', amount: 1, rate: 4.9 }
+    });
 
     // Helper to open drop-up
-    const openDropUp = (type: DropUpContentType, variant: DropUpVariant = 'handle', dynamicValue?: DropUpDynamicValue ) => {
+    const openDropUp = (type: DropUpContentType, variant: DropUpVariant = 'handle', dynamicValue?: DropUpDynamicValue, next? :() => void ) => {
         console.log(`Opening drop-up: ${type} (${variant})`);
         setDropUpContent(type);
         setDropUpVariant(variant);
         dynamicValue && setDropUpDynamicValue(dynamicValue);
         setShowDropUp(true);
+        setNextFunction(next)
+
     };
 
     const closeDropUp = () => {
@@ -93,7 +94,7 @@ const CurrentPage = ({ page = 'profile' }: CurrentPageProps) => {
             case 'profile':
                 return <ProfilePage openDropUp={openDropUp} />;
             case 'swap':
-                return <SwapPage openDropUp={openDropUp} startSwapFlow={startSwapFlow} />;
+                return <SwapPage openDropUp={openDropUp} startSwapFlow={startSwapFlow} setSwapDetails={setSwapDetails} />;
             case 'send':
                 return (
                     <SendPage
@@ -102,9 +103,20 @@ const CurrentPage = ({ page = 'profile' }: CurrentPageProps) => {
                 );
             case 'portfolio':
                 return <PortfolioPage />;
-
             case 'transaction-success':
-                return <TransactionSuccessPage amount={dropUpDynamicValue} />;
+                return <TransactionSuccessPage amount={sendMoneyAmount_CurrencyRoute} />;
+            case 'airdrop':
+                return <AirdropIntroPage />;
+            case 'airdrop-user-search':
+                return <NearbyUserSearchScreen_Airdrop />;
+            case 'airdrop-user-found':
+                return <UserFound_Airdrop setNextFunction={setNextFunction} openDropUp={openDropUp}/>;
+             case 'airdrop-success':
+                return <SuccessPage_Airdrop onClose={() => router.replace('/profile')}/>;
+
+            case 'receive-crypto':
+                return <ReceiveCryptoPage />;
+
             // Add more cases as needed
             default:
                 return <ProfilePage openDropUp={openDropUp} />;
@@ -136,12 +148,19 @@ const CurrentPage = ({ page = 'profile' }: CurrentPageProps) => {
         console.log('User confirmed swap → starting loading');
 
         // Show loading immediately
+
         openDropUp('loading-send-money', 'handle');
+
+        console.log(swapDetails)
+
+        setDropUpDynamicValue({currency: swapDetails.conversion.to , deposit: swapDetails.conversion.amount * swapDetails.conversion.rate, fromUser: '(conversion)'})
+        console.log(dropUpDynamicValue)
+        const details = {currency: swapDetails.conversion.to , deposit: swapDetails.conversion.amount * swapDetails.conversion.rate, fromUser: '(conversion)'}
 
         // After 2 seconds (mock processing), show success
         setTimeout(() => {
             console.log('Mock processing done → showing success');
-            openDropUp('bank-transfer-success', 'plain', dropUpDynamicValue);
+            openDropUp('bank-transfer-success', 'plain', details);
         }, 2000);
     };
 
@@ -153,9 +172,11 @@ const CurrentPage = ({ page = 'profile' }: CurrentPageProps) => {
         setTimeout(() => {
             console.log('Mock processing done → showing success');
             openDropUp(null, undefined);
-            router.replace(`/(sendPages)/${dropUpDynamicValue}/transactionSuccessRoute`)
+            router.replace(`/(sendPages)/${sendMoneyAmount_CurrencyRoute}/transactionSuccessRoute`)
         }, 2000);
     }
+
+
 
     // Render selected drop-up content
     const renderDropUpContent = () => {
@@ -163,25 +184,62 @@ const CurrentPage = ({ page = 'profile' }: CurrentPageProps) => {
 
         switch (dropUpContent) {
             case 'add-money':
-                return <AddMoneyDropUp />;
+                return <AddMoneyDropUp openDropUp={openDropUp} />;
             case 'send-money':
                 return <SendMoneyDropUP />;
             case 'loading-send-money':
                 return <LoadingDropUp_SendMoney />;
             case 'bank-transfer':
-                return <BankTransferDropUpContent />;
+                return <BankTransferDropUpContent onConfirmTransaction={
+                    () => {
+                        openDropUp('loading-send-money', "handle")
+                        setTimeout(() => {
+                            openDropUp('bank-transfer-success', "handle")
+                        }, 2000)
+                    }
+
+                } />;
             case 'bank-transfer-success':
                 return <BankTransferSuccessDropUpContent amount = {dropUpDynamicValue} />;
             case 'phone-card-illustration':
-                return <PhoneBehindCardIllustration />;
+                return <PhoneBehindCardIllustration cardCheck={
+                    () => {
+                        setTimeout(()=>{
+                            openDropUp('bank-transfer-success', 'handle')
+                        }, 1000)
+                    }
+                }  />;
             case 'select-currency':
                 return <SelectCurrencyDropUpContent />;
             case 'enter-amount':
                 return (
                     <EnterAmountDropUpContent
                         onSendConfirm={(amount) => {
+                            setSendMoneyAmount_CurrencyRoute(amount)
+                             openDropUp('confirm-pin', 'back-arrow')
+                            }
+                    }
+                    />
+                );
+            case 'enter-amount-airdrop':
+                return (
+                    <EnterAmountDropUpContent
+                        onSendConfirm={(amount) => {
+                            setSendMoneyAmount_CurrencyRoute(amount)
+                            openDropUp('loading-send-money', 'back-arrow');
+                            setTimeout(() => {
+                                router.replace('/airdrop-success')
+                            }, 2000)
+                        }}
+
+                    />
+                );
+             case 'enter-amount-card':
+                return (
+                    <EnterAmountDropUpContent_Card
+                        onSendConfirm={(amount) => {
                             setDropUpDynamicValue(amount)
-                            openDropUp('confirm-pin', 'back-arrow');
+                            openDropUp('phone-card-illustration', 'back-arrow');
                         }}
                     />
                 );
@@ -192,8 +250,8 @@ const CurrentPage = ({ page = 'profile' }: CurrentPageProps) => {
                     }}
                 />;
             case 'swap-confirmation':
-                return <ConfirmationDropUpContext_Swap onConfirm={handleConfirmSwap} />;
-            default:
+                return <ConfirmationDropUpContext_Swap swapDetails={swapDetails} onConfirm={handleConfirmSwap} />;
+             default:
                 return (
                     <Text style={{ color: 'white', fontSize: 18, textAlign: 'center', padding: 40 }}>
                         Unknown drop-up: {dropUpContent}

@@ -13,6 +13,20 @@ const TransactionSuccessPage = ({amount} :{amount: string}) => {
         router.replace('/profile')
     }
 
+    // const [deposit, setDeposit] = React.useState(0);
+    // const [currency, setCurrency] = React.useState('NGND');
+    // const extractDepositDetails = () =>{
+    //
+    //
+    // }
+
+    const depositDetails = amount.split('-')
+    const deposit = depositDetails[0]
+    const currency = depositDetails[1]
+    const toUser = depositDetails[2]
+
+    console.log(amount)
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.content}>
@@ -25,8 +39,8 @@ const TransactionSuccessPage = ({amount} :{amount: string}) => {
 
                     <Text style={styles.message}>
                         You have successfully sent{' '}
-                        <Text style={styles.highlight}>NGN { amount }</Text> to{' '}
-                        <Text style={styles.highlight}>John</Text>
+                        <Text style={styles.highlight}>{currency} { deposit }</Text> to{' '}
+                        <Text style={styles.highlight}>{toUser}</Text>
                     </Text>
                 </View>
 

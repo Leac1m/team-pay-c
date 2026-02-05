@@ -4,7 +4,8 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import {cardBehindPhone} from "@/payc/constants/images";
 
-const PhoneBehindCardIllustration = () => {
+const PhoneBehindCardIllustration = ({cardCheck} :{cardCheck: () => void}) => {
+    cardCheck()
     return (
         <View>
             <View style={styles.illustrationContainer}>
@@ -13,8 +14,8 @@ const PhoneBehindCardIllustration = () => {
                     style={styles.cardImage}
                     resizeMode="contain"
                 />
-                <Text style={styles.successText}>
-                    You have successfully deposited NGN 5000
+                <Text style={styles.instructionText}>
+                    Place your card behind your phone
                 </Text>
             </View>
 
@@ -40,8 +41,8 @@ const styles = StyleSheet.create({
         marginLeft: 64,
         marginTop: 32,
     },
-    successText: {
-        fontSize: 24,
+    instructionText: {
+        fontSize: 22,
         fontWeight: 'bold',
         color: 'white',
         textAlign: 'center',

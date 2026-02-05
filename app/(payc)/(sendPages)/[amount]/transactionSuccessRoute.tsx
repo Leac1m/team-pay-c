@@ -5,7 +5,7 @@ import React from "react";
 import TransactionSuccessPage from "@/payc/Home/main/sendMoney/TransactionSuccessPage";
 
 export default function TransactionSuccessRoute() {
-    const { amount } = useLocalSearchParams<{ amount: string }>();
+    const { amount } = useLocalSearchParams<{ amount : string }>();
 
     return (
         <TransactionSuccessPage amount={amount} />

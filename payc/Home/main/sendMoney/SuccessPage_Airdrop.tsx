@@ -1,41 +1,47 @@
 // payc/Home/main/sendMoney/TransactionSuccessPage.tsx
 
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
-import { ArrowLeft, Wallet2 } from 'lucide-react-native';
+import {View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image} from 'react-native';
+import { ArrowLeft } from 'lucide-react-native';
+import { successHalfCheck} from "@/payc/constants/images";
+import {router} from "expo-router";
 
 interface Props {
     onClose?: () => void;
 }
 
-const TransactionSuccessPage = ({ onClose }: Props) => {
+const AirdropSuccessPage = ({ onClose }: Props) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.content}>
                 {onClose && (
-                    <TouchableOpacity onPress={onClose} style={{ alignSelf: 'flex-start', padding: 16 }}>
+                    <TouchableOpacity onPress={() => router.replace('/profile')} style={{ alignSelf: 'flex-start', padding: 16 }}>
                         <ArrowLeft size={24} color="white" />
                     </TouchableOpacity>
                 )}
                 <View style={styles.successBody}>
-                    <Wallet2 size={180} color="#ffffff" style={styles.walletIcon} />
+                    <Image
+                        source={successHalfCheck}
+                        style={styles.logo}
+                        resizeMode="contain"
+                    />
 
                     <Text style={styles.message}>
-                        You have successfully sent{' '}
-                        <Text style={styles.highlight}>NGN 5000</Text> to{' '}
-                        <Text style={styles.highlight}>John</Text>
+                        <Text style={styles.highlight}>Success!</Text>
+                        You have successfully sent joshua tokens
                     </Text>
+
                 </View>
 
-                <TouchableOpacity style={styles.checkButton}>
-                    <Text style={styles.checkText}>Check Wallet</Text>
+                <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+                    <Text style={styles.closeText}>Close Wallet</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
     );
 };
 
-export default TransactionSuccessPage;
+export default AirdropSuccessPage;
 
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: '#0F172A' },
@@ -43,16 +49,22 @@ const styles = StyleSheet.create({
     backButton: { paddingTop: 16, paddingLeft: 16 },
     successBody: { alignItems: 'center', gap: 16 },
     walletIcon: { marginBottom: 16 },
-    message: {
-        fontSize: 18,
-        fontWeight: '600',
-        color: 'white',
-        textAlign: 'center',
-        width: '70%',
-        lineHeight: 26,
+    logo: {
+        height: 160,
+        width: 160,
     },
-    highlight: { fontWeight: 'bold' },
-    checkButton: {
+    message: {
+        fontSize: 12,
+        fontWeight: '600',
+        color: 'grey',
+        display: 'flex',
+        flexDirection: 'column',
+        textAlign: 'center',
+        width: '50%',
+        lineHeight: 26
+    },
+    highlight: { fontWeight: 'bold', fontSize: 18, color: 'white', },
+    closeButton: {
         backgroundColor: '#3B82F6',
         borderRadius: 8,
         paddingVertical: 16,
@@ -60,5 +72,6 @@ const styles = StyleSheet.create({
         marginBottom: 80,
         alignItems: 'center',
     },
-    checkText: { color: 'white', fontWeight: 'bold', fontSize: 14 },
+    closeText: { color: 'white', fontWeight: 'bold', fontSize: 14 },
+
 });

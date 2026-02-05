@@ -4,13 +4,20 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, SafeAreaView } from 'react-native';
 import { ArrowLeft } from 'lucide-react-native';
 import {userFound_PhoneImage} from "@/payc/constants/images";
+import {router} from "expo-router";
+import {DropUpContentType, DropUpDynamicValue, DropUpVariant} from "@/payc/constants/type";
+
 // import { userFound_PhoneImage } from '@/payc/constants/images';
 
-const UserFound_Airdrop = () => {
+const UserFound_Airdrop = ({openDropUp, setNextFunction} : {setNextFunction: (arg: () => void)=> void, openDropUp: {type: DropUpContentType, variant: DropUpVariant, dynamicValue?: DropUpDynamicValue , next? :() => void }}) => {
+
+    const handleContinueBtnPress = () => {
+        openDropUp('enter-amount-airdrop', 'back-arrow', null);
+    }
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.content}>
-                <TouchableOpacity style={styles.backButton}>
+                <TouchableOpacity  style={styles.backButton}>
                     <ArrowLeft size={32} color="#D1D5DB" />
                 </TouchableOpacity>
 
@@ -27,7 +34,7 @@ const UserFound_Airdrop = () => {
                         <Text style={styles.foundSubtitle}>You can send him tokens</Text>
                     </View>
 
-                    <TouchableOpacity style={styles.continueButton}>
+                    <TouchableOpacity onPress={handleContinueBtnPress} style={styles.continueButton}>
                         <Text style={styles.continueText}>Continue</Text>
                     </TouchableOpacity>
                 </View>
@@ -45,7 +52,7 @@ const styles = StyleSheet.create({
     content: { flex: 1, paddingHorizontal: 24, paddingVertical: 16, justifyContent: 'space-between' },
     backButton: { alignSelf: 'flex-start' },
     centerSection: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-    phoneImage: { width: 120, height: 'auto' },
+    phoneImage: { width: 120, height: 160 },
     messageContainer: { alignItems: 'center', marginTop: 48 },
     foundTitle: { fontSize: 30, fontWeight: 'bold', color: 'white' },
     foundSubtitle: { fontSize: 18, color: '#D1D5DB', marginTop: 8, textAlign: 'center' },

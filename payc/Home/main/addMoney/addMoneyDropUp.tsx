@@ -3,26 +3,35 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { BadgeDollarSign, CreditCard, Bitcoin, Smartphone, Send, Wallet } from 'lucide-react-native';
+import {dropUpInterface} from "@/payc/constants/type";
+import {router} from "expo-router";
 
-const addMoneyDropUpOptions = [
-    {
-        label: 'Bank Transfer',
-        desc: 'Receive money with your account number',
-        icon: <BadgeDollarSign size={28} color="white" />,
-    },
-    {
-        label: 'Card',
-        desc: 'Fund wallet using a debit card',
-        icon: <CreditCard size={28} color="white" />,
-    },
-    {
-        label: 'Onchain Deposit',
-        desc: 'Fund your wallet from a crypto wallet',
-        icon: <Bitcoin size={28} color="white" />,
-    },
-];
 
-const AddMoneyDropUp = () => {
+const AddMoneyDropUp = ({openDropUp} :{openDropUp:  dropUpInterface}) => {
+    const addMoneyDropUpOptions = [
+        {
+            label: 'Bank Transfer',
+            desc: 'Receive money with your account number',
+            icon: <BadgeDollarSign size={28} color="white" />,
+            action: () => openDropUp('bank-transfer', 'handle') ,
+        },
+        {
+            label: 'Card',
+            desc: 'Fund wallet using a debit card',
+            icon: <CreditCard size={28} color="white" />,
+            action: () => openDropUp('enter-amount-card', 'handle') ,
+
+        },
+        {
+            label: 'Onchain Deposit',
+            desc: 'Fund your wallet from a crypto wallet',
+            icon: <Bitcoin size={28} color="white" />,
+            action: () => router.replace('/receive-crypto') ,
+
+        },
+    ];
+
+
     console.log('[AddMoneyDropUp] Component mounted / rendered');
 
     return (
@@ -31,7 +40,7 @@ const AddMoneyDropUp = () => {
 
             <View style={styles.optionsContainer}>
                 {addMoneyDropUpOptions.map((item, index) => (
-                    <TouchableOpacity key={index} style={styles.optionButton} activeOpacity={0.8}>
+                    <TouchableOpacity onPress={item.action} key={index} style={styles.optionButton} activeOpacity={0.8}>
                         <View style={styles.iconContainer}>{item.icon}</View>
 
                         <View style={styles.textContainer}>

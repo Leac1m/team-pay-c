@@ -8,14 +8,14 @@ import {router} from "expo-router";
 const handleCHeckWallet = () => {
     router.replace('/portfolio');
 }
-const BankTransferSuccessDropUpContent = ({amount} : { amount: string } ) => {
+const BankTransferSuccessDropUpContent = ({amount} : { amount: { currency: string, deposit:number, fromUser : string} } ) => {
     return (
         <View>
             <View style={styles.successContainer}>
                 <Wallet2 size={144} color="#ffffff" style={styles.successIcon} />
 
                 <Text style={styles.successMessage}>
-                    You have successfully deposited NGN { amount || '5000'}
+                    You have successfully deposited {amount.currency || 'NGN'} { amount.deposit || 0}
                 </Text>
             </View>
 

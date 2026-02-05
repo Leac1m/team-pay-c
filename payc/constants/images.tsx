@@ -69,3 +69,6 @@ export const nairaImage = require('../../assets/currencies/NGN.png')
 export const usdcImage =  require('../../assets/currencies/USDC.png')
 
 export const suiImage =  require('../../assets/currencies/SUI.png')
+
+
+

@@ -28,7 +28,7 @@ const SendPage = ({ onSendPress }: SendPageProps) => {
         <SafeAreaView style={styles.container}>
             <View style={styles.content}>
                 {/* Header / Back */}
-                <TouchableOpacity style={styles.backButton} activeOpacity={0.7}>
+                <TouchableOpacity onPress={() =>router.replace('/profile')} style={styles.backButton} activeOpacity={0.7}>
                     <ArrowLeft size={24} color="white" />
                 </TouchableOpacity>
 
@@ -70,8 +70,7 @@ const SendPage = ({ onSendPress }: SendPageProps) => {
                             <TouchableOpacity
                                 style={styles.checkboxRow}
                                 activeOpacity={0.7}
-                                // onPress={() => setSaveToBeneficiaries(!saveToBeneficiaries)}
-                                onPress={() => router.push('/(sendPages)/[amount]/page')}
+                                onPress={() => setSaveToBeneficiaries(!saveToBeneficiaries)}
                             >
                                 <View
                                     style={[

@@ -6,10 +6,10 @@ import { ArrowLeft } from 'lucide-react-native';
 import { nairaGlobe } from '@/payc/constants/images';
 
 interface EnterAmountDropUpContentProps {
-    onSendConfirm: (amount:string) => void;  // Called when user taps "Send Money"
+    onSendConfirm: (amount:{ currency: string , deposit: number, fromUser : string}) => void;  // Called when user taps "Send Money"
 }
 
-const EnterAmountDropUpContent = ({ onSendConfirm }: EnterAmountDropUpContentProps) => {
+const EnterAmountDropUpContent_Card = ({ onSendConfirm }: EnterAmountDropUpContentProps) => {
     const [amount, setAmount] = useState('0'); // string to easily append/remove digits
     const [currency, setCurrency] = React.useState('NGN');
     const [toUser, setToUser] = React.useState('John');
@@ -34,7 +34,8 @@ const EnterAmountDropUpContent = ({ onSendConfirm }: EnterAmountDropUpContentPro
         if (amount === '0') return; // prevent sending zero
         console.log('Confirming send amount:', amount);
 
-        onSendConfirm(`${amount}-${currency}-${toUser}`);
+        onSendConfirm({ currency: 'NGN' , deposit: parseInt(amount), fromUser : 'none'});
+
     };
 
     return (
@@ -123,7 +124,7 @@ const EnterAmountDropUpContent = ({ onSendConfirm }: EnterAmountDropUpContentPro
     );
 };
 
-export default EnterAmountDropUpContent;
+export default EnterAmountDropUpContent_Card;
 
 const styles = StyleSheet.create({
     container: { flex: 1 },

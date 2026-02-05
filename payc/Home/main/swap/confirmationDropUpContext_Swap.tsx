@@ -5,14 +5,19 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 interface Props {
     onConfirm: () => void;
+    swapDetails: {
+        transactionFee: { value: number, currency: string },
+        conversion: { from: string, to: string, amount: number, rate: number}
+    },
+
 }
 
 
-const ConfirmationDropUpContext_Swap = ({ onConfirm }: Props) => {
-    const swapDetails = {
-        transactionFee: { value: 10, currency: 'NGN' },
-        conversion: { from: 'SUI', to: 'USDC', amount: 1, rate: 4.9 },
-    };
+const ConfirmationDropUpContext_Swap = ({swapDetails, onConfirm }: Props) => {
+    // const swapDetails = {
+    //     transactionFee: { value: 10, currency: 'NGN' },
+    //     conversion: { from: 'SUI', to: 'USDC', amount: 1, rate: 4.9 },
+    // };
 
     const swapDetailsArray = [
         {
@@ -21,7 +26,7 @@ const ConfirmationDropUpContext_Swap = ({ onConfirm }: Props) => {
         },
         {
             label: 'Conversion Rate',
-            value: `${swapDetails.conversion.amount} ${swapDetails.conversion.from} = ${swapDetails.conversion.rate} ${swapDetails.conversion.to}`,
+            value: `1 ${swapDetails.conversion.from} = ${swapDetails.conversion.rate} ${swapDetails.conversion.to}`,
         },
         {
             label: 'Currency',
@@ -38,9 +43,9 @@ const ConfirmationDropUpContext_Swap = ({ onConfirm }: Props) => {
             {/* Summary header */}
             <View style={styles.summaryHeader}>
                 <Text style={styles.summaryLabel}>You are Converting</Text>
-                <Text style={styles.summaryAmount}>200 Sui</Text>
+                <Text style={styles.summaryAmount}> {swapDetails.conversion.amount} {swapDetails.conversion.from}</Text>
                 <Text style={styles.summaryReceive}>
-                    and receiving {2.9} USDC
+                    and receiving {swapDetails.conversion.amount * swapDetails.conversion.rate} {swapDetails.conversion.to}
                 </Text>
             </View>
 

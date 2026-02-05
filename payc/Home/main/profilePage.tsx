@@ -139,6 +139,9 @@ export default function ProfilePage({ openDropUp }: ProfilePageProps) {
     const handleAirdropBtnClick = () => {
       openDropUp('send-money', 'handle')
     }
+    const handleLanguageDropDownClick = () => {
+        openDropUp('select-currency', 'handle')
+    }
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.mainContentWrapper}>
@@ -180,9 +183,9 @@ export default function ProfilePage({ openDropUp }: ProfilePageProps) {
 
                         <View style={styles.balanceValueRow}>
                             <Text style={styles.balanceText}>NGN {mockBalance.toFixed(0)}</Text>
-                            <View style={styles.balanceDot} >
+                            <TouchableOpacity onPress={handleLanguageDropDownClick} style={styles.balanceDot} >
                                 <ArrowDown size={10} color="#3B82F6" />
-                            </View>
+                            </TouchableOpacity>
                         </View>
 
                         <View style={styles.mainNavContainer}>

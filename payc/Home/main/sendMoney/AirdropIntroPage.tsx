@@ -12,9 +12,14 @@ import {
 } from 'react-native';
 import { ArrowLeft } from 'lucide-react-native';
 import {handHoldingPhone} from "@/payc/constants/images";
+import {router} from "expo-router";
 
 
+const handleAirdropContinueBtnPress = () => {
+    router.push('/airdrop-user-search');
+}
 const AirdropIntroPage = () => {
+
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
@@ -45,7 +50,7 @@ const AirdropIntroPage = () => {
                 </View>
 
                 {/* Continue button — naturally at bottom */}
-                <TouchableOpacity style={styles.continueButton} activeOpacity={0.85}>
+                <TouchableOpacity onPress={handleAirdropContinueBtnPress} style={styles.continueButton} activeOpacity={0.85}>
                     <Text style={styles.continueText}>Continue</Text>
                 </TouchableOpacity>
             </View>

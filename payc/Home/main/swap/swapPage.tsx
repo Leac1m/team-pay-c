@@ -22,11 +22,14 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 interface SwapPageProps {
     openDropUp: (type: string, variant?: 'handle' | 'back-arrow' | 'plain') => void;
+    setSwapDetails: (args : {
+        transactionFee: { value: number, currency: string },
+        conversion: { from: string, to: string, amount: number, rate: number }
+    }) => void;
 }
 
-const SwapPage = ({ openDropUp }: SwapPageProps) => {
+const SwapPage = ({ openDropUp , setSwapDetails}: SwapPageProps) => {
     const [currentFooterNav, setCurrentFooterNav] = useState(2);
-
     const [swapData, setSwapData] = useState({
         from: {
             currency: 'SUI',
@@ -45,7 +48,7 @@ const SwapPage = ({ openDropUp }: SwapPageProps) => {
     const [fromAmount, setFromAmount] = useState('');
     const [toAmount, setToAmount] = useState('');
     const [isInsufficient, setIsInsufficient] = useState(false);
-
+    const transactionFeeRate = 0.02
 
     const handleFromChange = (text: string) => {
         // Regex validation
@@ -113,6 +116,10 @@ const SwapPage = ({ openDropUp }: SwapPageProps) => {
 
         setFromAmount(toAmount);
         setToAmount(fromAmount);
+
+        console.log(swapData)
+        console.log(fromAmount, toAmount)
+
     };
 
     const handlePercentage = (percent: number) => {
@@ -136,6 +143,17 @@ const SwapPage = ({ openDropUp }: SwapPageProps) => {
         if (length > 10) return 28; // Slight shrinking
         return 32; // Default big size
     };
+
+    const handleSwapButtonPress = () => {
+        setSwapDetails({
+            transactionFee: { value: parseFloat(toAmount)* transactionFeeRate , currency: swapData.to.currency },
+            conversion: { from: swapData.from.currency, to: swapData.to.currency, amount: parseFloat(fromAmount), rate: swapData.exchangeRate }
+        })
+
+        console.log( { from: swapData.from.currency, to: swapData.to.currency, amount: parseFloat(fromAmount), rate: swapData.exchangeRate })
+
+        openDropUp('swap-confirmation', 'handle')
+    }
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
@@ -253,14 +271,14 @@ const SwapPage = ({ openDropUp }: SwapPageProps) => {
                         <View style={styles.rateValueRow}>
                             <Image source={suiIcon} style={styles.rateIcon} />
                             <Text style={styles.rateText}>
-                                1 SUI to {swapData.exchangeRate} NGN
+                                1 {swapData.from.currency} to {swapData.exchangeRate} {swapData.to.currency}
                             </Text>
                         </View>
                     </View>
                 </ScrollView>
 
                 <View style={styles.bottomButtonContainer}>
-                    <TouchableOpacity style={styles.swapButton}>
+                    <TouchableOpacity onPress={handleSwapButtonPress} style={styles.swapButton}>
                         <Text style={styles.swapButtonText}>Swap</Text>
                     </TouchableOpacity>
                 </View>
@@ -494,19 +512,14 @@ const styles = StyleSheet.create({
     },
     footerInner: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         width: '70%',
         alignSelf: 'center',
     },
-    footerItem: {
-        alignItems: 'center',
-        gap: 4,
-    },
+    footerItem: { alignItems: 'center', gap: 4 },
     footerItemActive: {},
-    footerLabel: {
-        color: '#94A3B8',
-        fontSize: 10,
-    },
+    footerIconContainer: { width: 20, height: 20, justifyContent: 'center', alignItems: 'center' },
+    footerLabel: { color: '#94A3B8', fontSize: 10 },
 });
 
 export default SwapPage;

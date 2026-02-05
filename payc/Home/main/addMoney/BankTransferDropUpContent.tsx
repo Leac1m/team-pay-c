@@ -16,7 +16,7 @@ const bankDetails = [
     { label: 'Account Name', content: userBankDetails.accountName },
 ];
 
-const BankTransferDropUpContent = () => {
+const BankTransferDropUpContent = ({onConfirmTransaction} : {onConfirmTransaction: () => void}) => {
     return (
         <View>
             <Text style={styles.title}>Bank Transfer</Text>
@@ -41,7 +41,7 @@ const BankTransferDropUpContent = () => {
                 ))}
             </View>
 
-            <TouchableOpacity style={styles.confirmButton} activeOpacity={0.8}>
+            <TouchableOpacity onPress={onConfirmTransaction} style={styles.confirmButton} activeOpacity={0.8}>
                 <Text style={styles.buttonText}>Confirm Transaction</Text>
             </TouchableOpacity>
         </View>

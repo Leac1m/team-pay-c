@@ -4,10 +4,26 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native';
 import { ArrowLeft } from 'lucide-react-native';
 import {nearbyDeviceSearchImage} from "@/payc/constants/images";
+import {router} from "expo-router";
 // import { nearbyDeviceSearchImage } from '@/payc/constants/images';
 
 
+
 const NearbyUserSearchScreen_Airdrop = () => {
+    const [userFound, setUserFound] = React.useState(false);
+
+    const initializeSearch = () => {
+        // mock logic
+        setTimeout(() => {
+            setUserFound(true)
+        }, 1000);
+    };
+
+    initializeSearch()
+
+    userFound? router.replace('/airdrop-user-found') : null;
+
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.content}>

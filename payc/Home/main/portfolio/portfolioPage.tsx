@@ -383,19 +383,14 @@ const styles = StyleSheet.create({
     },
     footerInner: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         width: '70%',
         alignSelf: 'center',
     },
-    footerItem: {
-        alignItems: 'center',
-        gap: 4,
-    },
+    footerItem: { alignItems: 'center', gap: 4 },
     footerItemActive: {},
-    footerLabel: {
-        color: '#94A3B8',
-        fontSize: 10,
-    },
+    footerIconContainer: { width: 20, height: 20, justifyContent: 'center', alignItems: 'center' },
+    footerLabel: { color: '#94A3B8', fontSize: 10 },
 });
 
 export default PortfolioPage;
