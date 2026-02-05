@@ -1,22 +1,29 @@
 // payc/Home/DropUps/SelectCurrencyDropUpContent.tsx
 
-import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import React, {Dispatch, SetStateAction, useState} from 'react';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {currencies} from "@/payc/constants/images";
 // import { currencies } from '@/payc/constants/images';
 
-const SelectCurrencyDropUpContent = () => {
+const SelectCurrencyDropUpContent = ({selectedCurrencyIndex, setSelectedCurrencyIndex} : {selectedCurrencyIndex: number, setSelectedCurrencyIndex: Dispatch<SetStateAction<number>>}) => {
+
+    const handleCurrencySwitch = (index : number) => {
+        setSelectedCurrencyIndex(index)
+    }
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Select Currency</Text>
 
             <View style={styles.list}>
                 {currencies.map((currency, index) => (
-                    <View
+                    <TouchableOpacity
                         key={index}
+                        onPress={
+                            () => handleCurrencySwitch(index)
+                        }
                         style={[
                             styles.currencyItem,
-                            index === 0 && styles.currencyItemSelected,
+                            index === selectedCurrencyIndex && styles.currencyItemSelected,
                         ]}
                     >
                         <Image
@@ -27,7 +34,7 @@ const SelectCurrencyDropUpContent = () => {
                         <Text style={styles.currencyText}>
                             {currency.title} ({currency.code})
                         </Text>
-                    </View>
+                    </TouchableOpacity>
                 ))}
             </View>
         </View>

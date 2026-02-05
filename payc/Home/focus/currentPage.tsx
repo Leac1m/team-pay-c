@@ -41,6 +41,7 @@ import SuccessPage_Airdrop from "@/payc/Home/main/sendMoney/SuccessPage_Airdrop"
 import EnterAmountDropUpContent_Card from "@/payc/Home/main/sendMoney/EnterAmountDropUpContent_Card";
 import ReceiveCrypto from "@/app/(payc)/(addPages)/receive-crypto";
 import ReceiveCryptoPage from "@/payc/Home/main/addMoney/RecieveCryptoPage";
+import {currencies} from "@/payc/constants/images";
 
 
 // import MainPage from '@/payc/Home/mainPage';
@@ -63,10 +64,12 @@ const CurrentPage = ({ page = 'profile' }: CurrentPageProps) => {
     const [dropUpVariant, setDropUpVariant] = useState<DropUpVariant>('handle');
     const [dropUpDynamicValue, setDropUpDynamicValue] = useState<DropUpDynamicValue>({ currency: 'NGN' , deposit: 0, fromUser : 'none'});
     const [nextFunction, setNextFunction] = useState<()=> void>();
+
     const [sendMoneyAmount_CurrencyRoute, setSendMoneyAmount_CurrencyRoute] = useState<string>('0000-null');
+    const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(0)
 
     const [swapDetails, setSwapDetails] = useState({
-        transactionFee: { value: 0, currency: 'NGN' },
+        transactionFee: { value: 0, currency: currencies[selectedCurrencyIndex].code },
         conversion: { from: 'SUI', to: 'USDC', amount: 1, rate: 4.9 }
     });
 
@@ -92,7 +95,7 @@ const CurrentPage = ({ page = 'profile' }: CurrentPageProps) => {
     const renderMainContent = () => {
         switch (page) {
             case 'profile':
-                return <ProfilePage openDropUp={openDropUp} />;
+                return <ProfilePage openDropUp={openDropUp} selectedCurrencyIndex={selectedCurrencyIndex} />;
             case 'swap':
                 return <SwapPage openDropUp={openDropUp} startSwapFlow={startSwapFlow} setSwapDetails={setSwapDetails} />;
             case 'send':
@@ -119,7 +122,7 @@ const CurrentPage = ({ page = 'profile' }: CurrentPageProps) => {
 
             // Add more cases as needed
             default:
-                return <ProfilePage openDropUp={openDropUp} />;
+                return <ProfilePage openDropUp={openDropUp} selectedCurrencyIndex={selectedCurrencyIndex} />;
         }
     };
 
@@ -210,7 +213,7 @@ const CurrentPage = ({ page = 'profile' }: CurrentPageProps) => {
                     }
                 }  />;
             case 'select-currency':
-                return <SelectCurrencyDropUpContent />;
+                return <SelectCurrencyDropUpContent selectedCurrencyIndex={selectedCurrencyIndex} setSelectedCurrencyIndex={setSelectedCurrencyIndex} />;
             case 'enter-amount':
                 return (
                     <EnterAmountDropUpContent

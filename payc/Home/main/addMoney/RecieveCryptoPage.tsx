@@ -67,7 +67,7 @@ function ReceiveCryptoPage() {
                 </View>
 
                 {/* Wallet Address + QR */}
-                <View style={styles.section}>
+                <View>
                     <Text style={styles.label}>Wallet address</Text>
 
                     <View style={styles.addressRow}>
@@ -125,16 +125,16 @@ const styles = StyleSheet.create({
     },
     header: {
         marginTop: 8,
-        marginBottom: 16,
+        marginBottom: 8,
     },
     title: {
-        fontSize: 32,
+        fontSize: 28,
         fontWeight: '800',
         color: 'white',
-        marginBottom: 24,
+        marginBottom: 8,
     },
     section: {
-        marginBottom: 20,
+        marginBottom: 12,
     },
     label: {
         fontSize: 14,
@@ -159,18 +159,18 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     tokenIcon: {
-        width: 24,
-        height: 24,
+        width: 20,
+        height: 20,
     },
     tokenName: {
         color: 'white',
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: '700',
         textTransform: 'uppercase',
     },
     networkInput: {
         color: 'white',
-        fontSize: 16,
+        fontSize: 12,
     },
     addressRow: {
         flexDirection: 'row',
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     addressText: {
-        fontSize: 11,
+        fontSize: 9,
         color: '#a3a3a3',
         fontWeight: '600',
         flex: 1,
@@ -202,25 +202,24 @@ const styles = StyleSheet.create({
     },
     qrContainer: {
         borderRadius: 12,
-        paddingVertical: 16,
         alignItems: 'center',
     },
     qrPlaceholder: {
-        width: 200,
-        height: 200,
+        width: 160,
+        height: 160,
         borderWidth: 1,
         borderColor: '#444',
         marginVertical: 16,
         backgroundColor: '#222', // optional
     },
     scanText: {
-        color: 'white',
+        color: 'black',
         fontSize: 16,
         fontWeight: '700',
         marginBottom: 4,
     },
     hintText: {
-        color: 'white',
+        color: 'black',
         fontSize: 14,
         fontWeight: '600',
         textAlign: 'center',
@@ -230,7 +229,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'white',
-        paddingVertical: 8,
+        paddingVertical: 6,
         paddingHorizontal: 12,
         borderRadius: 6,
         gap: 8,
@@ -243,12 +242,12 @@ const styles = StyleSheet.create({
     },
     warningText: {
         color: '#1e40af', // your _payc-blue-text
-        fontSize: 9,
+        fontSize: 7,
         fontWeight: '700',
         flexShrink: 1,
     },
     buttonContainer: {
-        marginTop: 24,
+        marginTop: 16,
         gap: 12,
     },
     primaryButton: {

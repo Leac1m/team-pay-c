@@ -1,7 +1,7 @@
 // ProfileScreen.tsx
 // (remove 'use client' — not needed in React Native)
 
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     View,
     Text,
@@ -13,7 +13,7 @@ import {
     Dimensions,
 } from 'react-native';
 
-import { nairaGlobe, profileImg, quickMenuImages } from '@/payc/constants/images';
+import {currencies, nairaGlobe, profileImg, quickMenuImages} from '@/payc/constants/images';
 
 
 // Use lucide-react-native instead of lucide-react
@@ -105,15 +105,24 @@ const recentReceipts: { profileImage: any; userHandle: string }[] = [
     { profileImage: nairaGlobe, userHandle: '@stickers' },
 ];
 
-const mockBalance = 5000;
+const mockBalance = [5000, 30 , 400, 4320, 490, 249];
 
 interface ProfilePageProps {
     openDropUp: (type: string, variant?: 'handle' | 'back-arrow') => void;
+    selectedCurrencyIndex: number,
 }
 
-export default function ProfilePage({ openDropUp }: ProfilePageProps) {
+export default function ProfilePage({ openDropUp, selectedCurrencyIndex }: ProfilePageProps) {
     const [currentFooterNav, setCurrentFooterNav] = useState(1);
     // const { openDropUp } = useDropUp();
+
+    const [activeCurrency, setActiveCurrency] = useState(currencies[selectedCurrencyIndex].code);
+    const [activeCurrencyBalance, setActiveCurrencyBalance] = useState(mockBalance[selectedCurrencyIndex]);
+
+    useEffect(()=>{
+        setActiveCurrency(currencies[selectedCurrencyIndex].code)
+        setActiveCurrencyBalance(mockBalance[selectedCurrencyIndex])
+    }, [selectedCurrencyIndex])
 
 
     const mainNavs: MainNavItem[] = [
@@ -131,7 +140,7 @@ export default function ProfilePage({ openDropUp }: ProfilePageProps) {
         {
             label: 'Receive',
             icon: <Download size={20} color="#3B82F6" />,
-            // onPress: () => openDropUp('receive', 'handle'), // add later
+            onPress: () => router.replace('/receive-crypto')
         },
     ];
 
@@ -142,6 +151,7 @@ export default function ProfilePage({ openDropUp }: ProfilePageProps) {
     const handleLanguageDropDownClick = () => {
         openDropUp('select-currency', 'handle')
     }
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.mainContentWrapper}>
@@ -182,7 +192,7 @@ export default function ProfilePage({ openDropUp }: ProfilePageProps) {
                         </View>
 
                         <View style={styles.balanceValueRow}>
-                            <Text style={styles.balanceText}>NGN {mockBalance.toFixed(0)}</Text>
+                            <Text style={styles.balanceText}>{activeCurrency} {activeCurrencyBalance.toFixed(0)}</Text>
                             <TouchableOpacity onPress={handleLanguageDropDownClick} style={styles.balanceDot} >
                                 <ArrowDown size={10} color="#3B82F6" />
                             </TouchableOpacity>
