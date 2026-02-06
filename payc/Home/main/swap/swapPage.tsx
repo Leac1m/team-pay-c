@@ -17,11 +17,12 @@ import {
 import { _nairaIcon, suiIcon } from '@/payc/constants/images';
 import { ArrowDown, ArrowUpDown } from 'lucide-react-native';
 import { footerNavs } from '@/payc/constants/footer';
+import {openDropUpType} from "@/payc/constants/type";
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 interface SwapPageProps {
-    openDropUp: (type: string, variant?: 'handle' | 'back-arrow' | 'plain') => void;
+    openDropUp: openDropUpType
     setSwapDetails: (args : {
         transactionFee: { value: number, currency: string },
         conversion: { from: string, to: string, amount: number, rate: number }

@@ -3,11 +3,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { BadgeDollarSign, CreditCard, Bitcoin, Smartphone, Send, Wallet } from 'lucide-react-native';
-import {dropUpInterface} from "@/payc/constants/type";
+import {dropUpInterface, openDropUpType} from "@/payc/constants/type";
 import {router} from "expo-router";
 
 
-const AddMoneyDropUp = ({openDropUp} :{openDropUp:  dropUpInterface}) => {
+const AddMoneyDropUp = ({openDropUp} :{openDropUp:  openDropUpType}) => {
     const addMoneyDropUpOptions = [
         {
             label: 'Bank Transfer',

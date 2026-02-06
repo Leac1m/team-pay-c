@@ -36,7 +36,13 @@ import {router} from "expo-router";
 import TransactionSuccessPage from "@/payc/Home/main/sendMoney/TransactionSuccessPage";
 import NearbyUserSearchScreen_Airdrop from "@/payc/Home/main/sendMoney/NearbyUserSearchScreen_Airdrop";
 import UserFound_Airdrop from "@/payc/Home/main/sendMoney/UserFound_Airdrop";
-import {DropUpContentType, DropUpDynamicValue, DropUpVariant} from "@/payc/constants/type";
+import {
+    DropUpContentType,
+    DropUpDynamicValue,
+    dropUpInterface,
+    DropUpVariant,
+    openDropUpType
+} from "@/payc/constants/type";
 import SuccessPage_Airdrop from "@/payc/Home/main/sendMoney/SuccessPage_Airdrop";
 import EnterAmountDropUpContent_Card from "@/payc/Home/main/sendMoney/EnterAmountDropUpContent_Card";
 import ReceiveCrypto from "@/app/(payc)/(addPages)/receive-crypto";
@@ -74,7 +80,7 @@ const CurrentPage = ({ page = 'profile' }: CurrentPageProps) => {
     });
 
     // Helper to open drop-up
-    const openDropUp = (type: DropUpContentType, variant: DropUpVariant = 'handle', dynamicValue?: DropUpDynamicValue, next? :() => void ) => {
+    const openDropUp: openDropUpType = (type: DropUpContentType, variant: DropUpVariant = 'handle', dynamicValue?: DropUpDynamicValue, next? :() => void ) => {
         console.log(`Opening drop-up: ${type} (${variant})`);
         setDropUpContent(type);
         setDropUpVariant(variant);
@@ -97,7 +103,7 @@ const CurrentPage = ({ page = 'profile' }: CurrentPageProps) => {
             case 'profile':
                 return <ProfilePage openDropUp={openDropUp} selectedCurrencyIndex={selectedCurrencyIndex} />;
             case 'swap':
-                return <SwapPage openDropUp={openDropUp} startSwapFlow={startSwapFlow} setSwapDetails={setSwapDetails} />;
+                return <SwapPage openDropUp={openDropUp} setSwapDetails={setSwapDetails} />;
             case 'send':
                 return (
                     <SendPage

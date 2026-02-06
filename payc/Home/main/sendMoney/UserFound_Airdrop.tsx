@@ -5,14 +5,14 @@ import { View, Text, TouchableOpacity, StyleSheet, Image, SafeAreaView } from 'r
 import { ArrowLeft } from 'lucide-react-native';
 import {userFound_PhoneImage} from "@/payc/constants/images";
 import {router} from "expo-router";
-import {DropUpContentType, DropUpDynamicValue, DropUpVariant} from "@/payc/constants/type";
+import {DropUpContentType, DropUpDynamicValue, DropUpVariant, openDropUpType} from "@/payc/constants/type";
 
 // import { userFound_PhoneImage } from '@/payc/constants/images';
 
-const UserFound_Airdrop = ({openDropUp, setNextFunction} : {setNextFunction: (arg: () => void)=> void, openDropUp: {type: DropUpContentType, variant: DropUpVariant, dynamicValue?: DropUpDynamicValue , next? :() => void }}) => {
+const UserFound_Airdrop = ({openDropUp, setNextFunction} : {setNextFunction: (arg: () => void)=> void, openDropUp: openDropUpType }) => {
 
     const handleContinueBtnPress = () => {
-        openDropUp('enter-amount-airdrop', 'back-arrow', null);
+        openDropUp('enter-amount-airdrop', 'back-arrow');
     }
     return (
         <SafeAreaView style={styles.container}>

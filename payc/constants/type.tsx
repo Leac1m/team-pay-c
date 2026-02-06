@@ -23,3 +23,5 @@ export interface dropUpInterface   {
         next? :() => void
     ) => void
 }
+
+export type  openDropUpType = (type: DropUpContentType, variant?: DropUpVariant, dynamicValue?: DropUpDynamicValue, next?: () => void) => void

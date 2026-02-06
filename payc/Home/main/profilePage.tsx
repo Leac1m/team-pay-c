@@ -31,6 +31,7 @@ import {
 import {useDropUp} from "@/payc/contexts/DropUpContexts";
 import {router} from "expo-router";
 import {footerNavs} from "@/payc/constants/footer";
+import {dropUpInterface, DropUpVariant, openDropUpType} from "@/payc/constants/type";
 
 
 // ──────────────────────────────────────────────
@@ -108,7 +109,7 @@ const recentReceipts: { profileImage: any; userHandle: string }[] = [
 const mockBalance = [5000, 30 , 400, 4320, 490, 249];
 
 interface ProfilePageProps {
-    openDropUp: (type: string, variant?: 'handle' | 'back-arrow') => void;
+    openDropUp: openDropUpType
     selectedCurrencyIndex: number,
 }
 
