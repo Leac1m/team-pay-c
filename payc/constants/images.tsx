@@ -11,6 +11,8 @@ export const payCards = require('../../assets/PayCards.png');
 export const blankBox = require('../../assets/BlankBox.png');
 
 export const profileImg = require('../../assets/ProfileImg.jpg');
+export const vawlence     = require('../../assets/Vawlence.png');
+
 
 export const quickMenuImages = [
     { img: require('../../assets/icons/ScanIcon.png'),   label: 'Scan QR code' },

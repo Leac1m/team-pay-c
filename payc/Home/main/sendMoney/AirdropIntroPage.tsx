@@ -44,7 +44,7 @@ const AirdropIntroPage = () => {
                         <Image
                             source={handHoldingPhone}
                             style={styles.illustration}
-                            resizeMode="contain"
+                            resizeMode='contain'
                         />
                     </View>
                 </View>
@@ -68,13 +68,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 24,
-        justifyContent: 'space-between', // ← this is the key — same as original
         paddingBottom: 32,               // breathing room at bottom
     },
 
     upperContent: {
         flex: 1,
-        justifyContent: 'space-between', // mimics h-[80%] + internal justify-between
         paddingTop: 16,
     },
 
@@ -104,14 +102,14 @@ const styles = StyleSheet.create({
 
     imageWrapper: {
         alignItems: 'flex-end',
-        marginTop: 32,
+        marginTop: 8,
         marginBottom: 24, // space before button
+        height: '60%'
     },
 
     illustration: {
-        width: '80%',
-        height: undefined,
-        aspectRatio: 1, // adjust if original image is not square
+        width: '90%',
+        height: '90%',
     },
 
     continueButton: {

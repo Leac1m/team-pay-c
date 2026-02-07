@@ -17,7 +17,7 @@ const UserFound_Airdrop = ({openDropUp, setNextFunction} : {setNextFunction: (ar
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.content}>
-                <TouchableOpacity  style={styles.backButton}>
+                <TouchableOpacity onPress={()=> router.replace('/airdrop')}  style={styles.backButton}>
                     <ArrowLeft size={32} color="#D1D5DB" />
                 </TouchableOpacity>
 

@@ -13,7 +13,7 @@ import {
     Dimensions,
 } from 'react-native';
 
-import {currencies, nairaGlobe, profileImg, quickMenuImages} from '@/payc/constants/images';
+import {currencies, nairaGlobe, profileImg, quickMenuImages, vawlence} from '@/payc/constants/images';
 
 
 // Use lucide-react-native instead of lucide-react
@@ -102,8 +102,8 @@ const recentTransactions: {
 
 const recentReceipts: { profileImage: any; userHandle: string }[] = [
     { profileImage: profileImg, userHandle: '@moutfa' },
-    { profileImage: nairaGlobe, userHandle: '@vawlence' },
-    { profileImage: nairaGlobe, userHandle: '@stickers' },
+    { profileImage: vawlence, userHandle: '@vawlence' },
+    { profileImage: vawlence, userHandle: '@stickers' },
 ];
 
 const mockBalance = [5000, 30 , 400, 4320, 490, 249];
