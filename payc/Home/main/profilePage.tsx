@@ -4,7 +4,6 @@
 import React, {useEffect, useState} from 'react';
 import {
     View,
-    Text,
     StyleSheet,
     Image,
     ScrollView,
@@ -26,13 +25,13 @@ import {
     HandCoins,
     Plus,
     Send,
-    Wallet, ArrowDown,
+    Wallet, ArrowDown, ChevronDown,
 } from 'lucide-react-native';
 import {useDropUp} from "@/payc/contexts/DropUpContexts";
 import {router} from "expo-router";
 import {footerNavs} from "@/payc/constants/footer";
 import {dropUpInterface, DropUpVariant, openDropUpType} from "@/payc/constants/type";
-
+import {SpaceGroteskText, Text} from "@/components/ui/CustomText";
 
 // ──────────────────────────────────────────────
 // Keep ALL names, structures, types exactly as original
@@ -165,7 +164,7 @@ export default function ProfilePage({ openDropUp, selectedCurrencyIndex }: Profi
                                 <Image source={profileImg} style={styles.avatarImg} />
                             </View>
                         </View>
-                        <Text style={styles.greeting}>HI, Jimmy</Text>
+                        <Text style={styles.greeting}>Hi, Jimmy</Text>
                     </View>
 
                     <View style={styles.quickMenuContainer}>
@@ -189,13 +188,13 @@ export default function ProfilePage({ openDropUp, selectedCurrencyIndex }: Profi
                     <View style={styles.balanceSection}>
                         <View style={styles.balanceLabelRow}>
                             <Text style={styles.balanceLabel}>Funding Balance</Text>
-                            <Eye size={12} color="#9CA3AF" />
+                            <Eye size={12} color="#8B8D8F" />
                         </View>
 
                         <View style={styles.balanceValueRow}>
                             <Text style={styles.balanceText}>{activeCurrency} {activeCurrencyBalance.toFixed(0)}</Text>
                             <TouchableOpacity onPress={handleLanguageDropDownClick} style={styles.balanceDot} >
-                                <ArrowDown size={10} color="#3B82F6" />
+                                <ChevronDown size={12} color="#3B82F6" />
                             </TouchableOpacity>
                         </View>
 
@@ -245,7 +244,7 @@ export default function ProfilePage({ openDropUp, selectedCurrencyIndex }: Profi
                                                     style={styles.receiptAvatar}
                                                 />
                                             </View>
-                                            <Text style={styles.receiptHandle}>{receipt.userHandle}</Text>
+                                            <SpaceGroteskText style={styles.receiptHandle}>{receipt.userHandle}</SpaceGroteskText>
                                         </View>
                                     ))
                                 )}
@@ -270,9 +269,9 @@ export default function ProfilePage({ openDropUp, selectedCurrencyIndex }: Profi
                                             <View style={styles.transactionLeft}>
                                                 <View style={styles.iconWrapper}>
                                                     {trans.status === 'sent' ? (
-                                                        <Send size={24} color="#3B82F6" />
+                                                        <Send size={28} color="#3B82F6" />
                                                     ) : trans.status === 'received' ? (
-                                                        <HandHeart size={24} color="#3B82F6" />
+                                                        <HandHeart size={28} color="#3B82F6" />
                                                     ) : null}
                                                 </View>
 
@@ -367,7 +366,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 8,
         paddingVertical: 4,
-        backgroundColor: '#1E293B',
+        backgroundColor: '#3B82F633',
         gap: 16,
     },
     quickIconItem: {},
@@ -375,15 +374,16 @@ const styles = StyleSheet.create({
 
     balanceSection: { marginTop: 32, alignItems: 'center' },
     balanceLabelRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-    balanceLabel: { color: '#9CA3AF', fontSize: 12 },
+    balanceLabel: { color: '#8B8D8F', fontSize: 12},
     balanceValueRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8 },
-    balanceText: { color: 'white', fontSize: 38, fontWeight: '700' },
+    balanceText: { color: 'white', fontSize: 38, fontWeight: '700',  fontFamily: 'SpaceGrotesk' },
     balanceDot: {
         width: 20,
         height: 20,
         borderRadius: 10,
         borderWidth: 2,
         borderColor: '#3B82F6',
+        backgroundColor: '#3B82F633',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -400,18 +400,18 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 999,
-        backgroundColor: '#182C53',
+        backgroundColor: '#1B2949',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 4,
     },
-    mainNavLabel: { color: '#D1D5DB', fontSize: 10 },
+    mainNavLabel: { color: '#D1D5DB', fontSize: 10,  },
 
     cardsContainer: { marginTop: 32 },
     card: {
         width: '90%',
         alignSelf: 'center',
-        backgroundColor: '#182C53',
+        backgroundColor: '#1B2949',
         borderRadius: 12,
         shadowColor: '#737373',
         shadowOffset: { width: 0, height: 4 },
@@ -425,8 +425,8 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         paddingHorizontal: 12,
     },
-    cardTitle: { color: '#9CA3AF', fontWeight: '600', fontSize: 15 },
-    seeAll: { color: '#3B82F6', fontSize: 12 },
+    cardTitle: { color: '#8B8D8F', fontWeight: '600', fontSize: 16, fontFamily: 'SpaceGrotesk' },
+    seeAll: { color: '#3B82F6', fontSize: 12, fontFamily: 'SpaceGrotesk', fontWeight: '500' },
 
     receiptsContent: {
         flexDirection: 'row',
@@ -452,14 +452,14 @@ const styles = StyleSheet.create({
     },
     transactionLeft: { flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 },
     iconWrapper: {},
-    transTitle: { color: 'white', fontWeight: '700', fontSize: 15 },
-    transDate: { color: '#9CA3AF', fontSize: 11 },
+    transTitle: { color: 'white', fontWeight: '500', fontSize: 16 },
+    transDate: { color: '#8B8D8F', fontSize: 12 },
     transactionRight: { alignItems: 'flex-end' },
-    transAmount: { color: 'white', fontWeight: '700', fontSize: 15 },
-    transStatus: { color: '#9CA3AF', fontSize: 11 },
+    transAmount: { color: 'white', fontWeight: '500', fontSize: 14 },
+    transStatus: { color: '#8B8D8F', fontSize: 12 },
 
     emptyContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingVertical: 20 },
-    emptyText: { color: '#9CA3AF', fontSize: 12 },
+    emptyText: { color: '#8B8D8F', fontSize: 12, fontFamily: 'Inter', fontWeight: '600' },
 
     airdropSection: { paddingVertical: 32, alignItems: 'center' },
     airdropBtn: {
@@ -468,7 +468,7 @@ const styles = StyleSheet.create({
         paddingVertical: 16,
         borderRadius: 999,
     },
-    airdropText: { color: 'white', fontWeight: '600', fontSize: 14 },
+    airdropText: { color: 'white', fontWeight: '500', fontSize: 16 , fontFamily: 'Lexend'},
 
     footer: {
         borderTopWidth: 1,
